@@ -1,0 +1,43 @@
+<template>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated>
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+        />
+
+        <q-toolbar-title>
+          Data Sync Emulation App
+        </q-toolbar-title>
+
+        <div>Quasar v{{ $q.version }}</div>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container>
+      <router-view/>
+    </q-page-container>
+  </q-layout>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const rightDrawerOpen = ref(false)
+
+    return {
+      rightDrawerOpen,
+      toggleLeftDrawer() {
+        rightDrawerOpen.value = !rightDrawerOpen.value
+      },
+    }
+  },
+})
+</script>
