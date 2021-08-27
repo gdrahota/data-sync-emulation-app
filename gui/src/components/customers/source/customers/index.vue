@@ -2,13 +2,13 @@
   <div class="container">
     <q-list bordered>
       <q-item>
-        Kunden-Scores
+        Kunden
       </q-item>
       <q-separator/>
 
       <template v-for="customer of customerList" :key="customer.id">
         <customer
-          :customerId="customer.id"
+          :customer="customer"
           v-ripple
         />
         <q-separator/>
@@ -18,14 +18,13 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
 import { mapActions, mapGetters } from 'vuex'
 
 import Customer from '../customers/customer'
 
 const names = [ 'Mike', 'Guido', 'Peter', 'Helmut', 'Rolf', 'Pascal', 'Robert', 'Susanne', 'Heike', 'Gerhard' ]
 
-export default defineComponent({
+export default {
   beforeUnmount() {
     clearInterval(this.interval)
     this.interval = null
@@ -45,13 +44,14 @@ export default defineComponent({
     }
 
     if ( !this.interval ) {
-      this.interval = setInterval(this.recalculateScore, 1000)
+      this.interval = setInterval(this.recalculateScore, this.intervalInMillis)
     }
   },
 
   computed: {
     ...mapGetters({
       customerList: 'customers/getItems',
+      intervalInMillis: 'customers/getIntervalInMillis',
     }),
   },
 
@@ -68,22 +68,29 @@ export default defineComponent({
     recalculateScore() {
       const id = Math.ceil(Math.random() * 10)
 
-      this.setBgColor({
-        id,
-        bgColor: 'bg-blue-2',
-      })
-
       this.setScore({
         id,
         score: Math.ceil(Math.random() * 100),
       })
+
+      this.setBgColor({
+        id,
+        bgColor: 'bg-blue-2',
+      })
     },
   },
-})
+
+  watch: {
+    intervalInMillis() {
+      clearInterval(this.interval)
+      this.interval = setInterval(this.recalculateScore, this.intervalInMillis)
+    },
+  },
+}
 </script>
 
 <style lang="sass" scoped>
 .container
-  height: 700px
+  height: calc(100% - 100px)
   overflow-y: auto
 </style>

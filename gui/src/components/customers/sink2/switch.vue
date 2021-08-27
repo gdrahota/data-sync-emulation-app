@@ -1,8 +1,10 @@
 <template>
-  <div style="padding: 10px; text-align:center;">
-    <div>{{ label }}</div>
-    <q-toggle v-model="value" color="green" style="padding-top: 20px"/>
-  </div>
+  <q-toggle
+    v-model="value"
+    color="green"
+    :label="label"
+    dense
+  />
 </template>
 
 <script>
@@ -11,9 +13,10 @@ import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      getSwitchState: 'customers/getConnectedToSource',
-      getSourceEvents: 'customers/getSourceEvents',
-      lastReceivedEventId: 'customers/getLastReceivedEventId',
+      getSourceEvents: 'customers/getEvents',
+      getSwitchState: 'customers/sink2/getConnectedToSource',
+      lastReceivedEventId: 'customers/sink2/getLastReceivedEventId',
+      intervalInMillis: 'customers/sink2/getIntervalInMillis',
     }),
     value: {
       get() {
@@ -25,8 +28,8 @@ export default {
     },
     label() {
       return this.getSwitchState
-        ? 'Verbunden'
-        : 'Unterbrochen'
+        ? 'connected'
+        : 'disconnected'
     },
   },
 
@@ -37,7 +40,7 @@ export default {
 
   created() {
     if ( !this.interval ) {
-      this.interval = setInterval(this.processSinkEvent, 1500)
+      this.interval = setInterval(this.processFirstEvent, this.intervalInMillis)
     }
   },
 
@@ -47,11 +50,11 @@ export default {
 
   methods: {
     ...mapActions({
-      processSinkEvent: 'customers/processSinkEvent',
+      processFirstEvent: 'customers/sink2/processFirstEvent',
     }),
     ...mapMutations({
-      addSinkEvent: 'customers/ADD_SINK_EVENT',
-      setSwitchState: 'customers/SET_CONNECTED_TO_SOURCE',
+      addSinkEvent: 'customers/sink2/ADD_EVENT',
+      setSwitchState: 'customers/sink2/SET_CONNECTED_TO_SOURCE',
     }),
   },
 
@@ -66,6 +69,10 @@ export default {
           }
         })
       }
+    },
+    intervalInMillis() {
+      clearInterval(this.interval)
+      this.interval = setInterval(this.processFirstEvent, this.intervalInMillis)
     },
   },
 }

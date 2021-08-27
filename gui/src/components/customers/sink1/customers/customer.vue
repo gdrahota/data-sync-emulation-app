@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable :class="customer.bgColor || 'GuiDo'">
+  <q-item clickable :class="[customer.bgColor, isInSync ? 'bg-green-3' : 'bg-red-3']">
     <q-item-section>
       <q-item-label>{{ customer.id }}) {{ customer.name }}: {{ customer.score }}</q-item-label>
     </q-item-section>
@@ -12,8 +12,14 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      interval: 'customers/getIntervalInMillis',
+      getSourceCustomer: 'customers/getItem',
     }),
+    sourceCustomer() {
+      return this.getSourceCustomer(this.customer.id)
+    },
+    isInSync() {
+      return this.sourceCustomer.score === this.customer.score
+    },
   },
 
   methods: {
@@ -35,7 +41,7 @@ export default {
 
   watch: {
     'customer.bgColor'() {
-      setTimeout(this.resetColor, this.interval)
+      setTimeout(this.resetColor, 1000)
     },
   },
 }

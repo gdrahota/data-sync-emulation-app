@@ -2,11 +2,11 @@
   <div class="container">
     <q-list bordered>
       <q-item>
-        {{ sinkEventList.length }} Ziel-Events
+        Events received: {{ numberOfEventsReceived }}, Event queue: {{ eventList.length }}
       </q-item>
       <q-separator/>
 
-      <template v-for="event of sinkEventList" :key="event">
+      <template v-for="event of eventList" :key="event">
         <q-item>
           <q-item-label>
             {{ event }}
@@ -24,7 +24,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      sinkEventList: 'customers/getSinkEvents',
+      eventList: 'customers/sink1/getEvents',
+      numberOfEventsReceived: 'customers/sink1/getNumberOfEventsReceived',
     }),
   },
 }

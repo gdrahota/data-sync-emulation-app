@@ -2,13 +2,13 @@
   <div class="container">
     <q-list bordered>
       <q-item>
-        {{ customerEvents.length }} Kunden-Events
+        Total events: {{ eventCounter }}, Event queue: {{ events.length }}
       </q-item>
       <q-separator/>
 
-      <template v-for="customerId of customerEvents" :key="customerId">
+      <template v-for="event of events" :key="event.item.id">
         <q-item>
-          <q-item-label>{{ customerId }}</q-item-label>
+          <div class="text-caption">{{ event }}</div>
         </q-item>
         <q-separator/>
       </template>
@@ -23,7 +23,8 @@ import { mapGetters } from 'vuex'
 export default defineComponent({
   computed: {
     ...mapGetters({
-      customerEvents: 'customers/getSourceEvents',
+      eventCounter: 'customers/getEventCounter',
+      events: 'customers/getEvents',
     }),
   },
 })
