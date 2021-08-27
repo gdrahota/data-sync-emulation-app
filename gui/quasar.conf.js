@@ -136,8 +136,8 @@ module.exports = configure(function( ctx ) {
       },
 
       manifest: {
-        name: `Quasar App`,
-        short_name: `Quasar App`,
+        name: `Data Sync Emulation App`,
+        short_name: `Data Sync Emulation`,
         description: `A Quasar Framework app`,
         display: 'standalone',
         orientation: 'portrait',

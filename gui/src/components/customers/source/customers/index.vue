@@ -1,20 +1,18 @@
 <template>
-  <div class="container">
-    <q-list bordered>
-      <q-item>
-        Kunden
-      </q-item>
-      <q-separator/>
+  <q-list bordered>
+    <q-item>
+      Kunden
+    </q-item>
+    <q-separator/>
 
-      <template v-for="customer of customerList" :key="customer.id">
-        <customer
-          :customer="customer"
-          v-ripple
-        />
-        <q-separator/>
-      </template>
-    </q-list>
-  </div>
+    <template v-for="customer of customerList" :key="customer.id">
+      <customer
+        :customer="customer"
+        v-ripple
+      />
+      <q-separator/>
+    </template>
+  </q-list>
 </template>
 
 <script>
@@ -88,9 +86,3 @@ export default {
   },
 }
 </script>
-
-<style lang="sass" scoped>
-.container
-  height: calc(100% - 100px)
-  overflow-y: auto
-</style>

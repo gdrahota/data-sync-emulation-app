@@ -1,7 +1,7 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="q-pa-md" style="width: 98%">
-      <div class="row q-col-gutter-none">
+  <q-page class="flex">
+    <div class="q-pa-md" style="width: 100%">
+      <div class="row q-col-gutter-sm">
         <div class="col-4">
           <q-list bordered>
             <q-item style="height: 50px">
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="row q-col-gutter-none">
+      <div class="row q-col-gutter-sm">
         <div class="col-4">
           <q-list bordered>
             <q-item style="height: 65px">
@@ -48,6 +48,13 @@
                 class="q-mt-md"
               >
                 Change Interval:
+                <q-icon name="info" size="20px" class="q-pl-sm">
+                  <q-tooltip :delay="400" :offset="[0, -60]">
+                    <div class="tooltip-format">
+                      Data changes are simulated. Some random record will be changed every {{ sourceIntervalInMillis }} ms.
+                    </div>
+                  </q-tooltip>
+                </q-icon>
               </q-chip>
               <set-interval
                 :value="sourceIntervalInMillis"
@@ -66,6 +73,13 @@
                 class="q-mt-md"
               >
                 Processing time:
+                <q-icon name="info" size="20px" class="q-pl-sm">
+                  <q-tooltip :delay="400" :offset="[0, -60]">
+                    <div class="tooltip-format">
+                      Event processed is being simulated to consume {{ target1IntervalInMillis }} ms.
+                    </div>
+                  </q-tooltip>
+                </q-icon>
               </q-chip>
               <set-interval
                 :value="target1IntervalInMillis"
@@ -84,6 +98,13 @@
                 class="q-mt-md"
               >
                 Processing time:
+                <q-icon name="info" size="20px" class="q-pl-sm">
+                  <q-tooltip :delay="400" :offset="[0, -60]">
+                    <div class="tooltip-format">
+                      Event processed is being simulated to consume {{ target2IntervalInMillis }} ms.
+                    </div>
+                  </q-tooltip>
+                </q-icon>
               </q-chip>
               <set-interval
                 :value="target2IntervalInMillis"
@@ -94,24 +115,38 @@
         </div>
       </div>
 
-      <div class="row q-col-gutter-none">
-        <div class="col-1">
-          <customers/>
+      <div class="row q-col-gutter-sm">
+        <div class="col-4">
+          <div class="row q-col-gutter-none">
+            <div class="col-3">
+              <customers/>
+            </div>
+            <div class="col-9">
+              <CustomerEvents/>
+            </div>
+          </div>
         </div>
-        <div class="col-3">
-          <CustomerEvents/>
+
+        <div class="col-4">
+          <div class="row q-col-gutter-none">
+            <div class="col-3">
+              <CustomersSink1/>
+            </div>
+            <div class="col-9">
+              <CustomerSink1Events/>
+            </div>
+          </div>
         </div>
-        <div class="col-1">
-          <CustomersSink1/>
-        </div>
-        <div class="col-3">
-          <CustomerSink1Events/>
-        </div>
-        <div class="col-1">
-          <CustomersSink2/>
-        </div>
-        <div class="col-3">
-          <CustomerSink2Events/>
+
+        <div class="col-4">
+          <div class="row q-col-gutter-none">
+            <div class="col-3">
+              <CustomersSink2/>
+            </div>
+            <div class="col-9">
+              <CustomerSink2Events/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -169,7 +204,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.container
-  height: 700px
-  overflow-y: auto
+.tooltip-format
+  font-size: 16px
 </style>

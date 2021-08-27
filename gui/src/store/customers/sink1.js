@@ -4,11 +4,11 @@ const state = {
 
   lastReceivedEventId: 0,
 
-  connectedToSource: false,
+  connectedToSource: true,
 
   numberOfEventsReceived: 0,
 
-  intervalInMillis: 2000,
+  intervalInMillis: 1000,
 }
 
 const processFirstEvent = ( { commit, state } ) => {

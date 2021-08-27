@@ -7,7 +7,7 @@ const state = {
   eventCounter: 0,
   events: [],
 
-  intervalInMillis: 1000,
+  intervalInMillis: 2000,
 }
 
 const add = ( { commit }, customer ) => {
